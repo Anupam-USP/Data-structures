@@ -24,6 +24,8 @@ public:
 
     friend istream & operator >> (istream &is, Sparse &s);
     friend ostream & operator << (ostream &os, Sparse &s);
+    // Adding sparse
+    Sparse operator+(Sparse &s);
 };
 
 istream & operator >> (istream &is, Sparse &s){
@@ -49,9 +51,45 @@ ostream & operator << (ostream &os, Sparse &s){
     return os;
 }
 
+Sparse Sparse::operator+(Sparse &s){
+    int i,j,k;
+    if(m!=s.m || n!=s.n)
+        return NULL;
+    Sparse *sum = new Sparse(m,n,num+s.num);
+    i=j=k=0;
+    while(i<num && j<s.num){
+        if(ele[i].i<s.ele[j].j)
+            sum->ele[k++]=ele[i++];
+        else if(ele[i].i>s.ele[j].j)
+            sum->ele[k++]=ele[j++];
+        else{
+            if(ele[i].j<s.ele[j].j)
+                sum->ele[k++]=ele[i++];
+            else if(ele[i].j>s.ele[j].j)
+                sum->ele[k++]=ele[j++];
+            else{
+                sum->ele[k]=ele[i];
+                sum->ele[k++].x=ele[i++].x+s.ele[j++].x;
+            }
+        }
+    }
+    for(;i<num;i++) sum->ele[k++]=ele[i];
+    for(;j<s.num;j++) sum->ele[k++]=s.ele[j];
+    sum->num=k;
+    return *sum;
+}
+
 int main(){
     Sparse s1(5,5,5);
+    Sparse s2(5,5,5);
+
     cin>>s1;
-    cout<<s1;
+    cin>>s2;
+    
+    cout<<"First matrix: "<<endl<<s1<<endl;
+    cout<<"Second matrix: "<<endl<<s2<<endl;
+
+    Sparse sum=s1+s2;
+    cout<<"Sum matrix: "<<endl<<sum<<endl;
     return 0;
 }
