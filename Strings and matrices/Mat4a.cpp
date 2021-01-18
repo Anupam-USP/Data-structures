@@ -54,7 +54,8 @@ ostream & operator << (ostream &os, Sparse &s){
 Sparse Sparse::operator+(Sparse &s){
     int i,j,k;
     if(m!=s.m || n!=s.n)
-        return NULL;
+        return 0;
+
     Sparse *sum = new Sparse(m,n,num+s.num);
     i=j=k=0;
     while(i<num && j<s.num){
