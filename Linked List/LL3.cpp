@@ -86,6 +86,56 @@ void Insert(Node *p, int idx, int x){
     }
 }
 
+void InsertSL(Node *p, int x){
+    // Inserting in sorted list
+    Node *t,*q=nullptr;
+    t=new Node;
+    t->data=x;
+    t->next=0;
+    if(first==0){
+        first=t;
+    }
+    else{
+        while(p && p->data<x){
+            q=p;
+            p=p->next;
+        }
+        if (p==first){
+            t->next=first;
+            first=t;
+        }
+        else{
+            t->next=q->next;
+            q->next=t;
+        }
+    }
+}
+
+int Delete(Node *p, int idx){
+    Node *q=0;
+    int x=-1;
+
+    if(idx<1 || idx>count(p))
+        return -1;
+    else if(idx==1){
+        q=first;
+        x=first->data;
+        first=first->next;
+        delete q;
+        return x;
+    }
+    else{
+        for(int i=0;i<idx-1;i++){
+            q=p;
+            p=p->next;
+        }
+        q->next=p->next;
+        x=p->data;
+        delete p;
+        return x;
+    }
+}
+
 int main(){
     Node *temp;
     int A[] = {2,6,8,10,14};
@@ -97,7 +147,10 @@ int main(){
     //     cout<<"Key found "<<temp->data<<endl;}
     // else
     //     cout<<"Key not found"<<endl;
-    Insert(first,2,54);
+    InsertSL(first,9);
+    Display(first);
+    cout<<endl;
+    Delete(first,3);
     Display(first);
     return 0;
 }
