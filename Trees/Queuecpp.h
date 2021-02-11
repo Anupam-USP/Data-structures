@@ -1,6 +1,7 @@
 
 #ifndef Queuecpp_h
 #define Queuecpp_h
+using namespace std;
 
 class Node{
 public:
@@ -16,13 +17,13 @@ public:
     Queue(){
         front = rear = -1;
         size=10;
-        Q=new Node[size];
+        Q=new Node*[size];
     }
 
     Queue(int size){
         front = rear = -1;
         this->size = size;
-        Q=new Node[this->size];
+        Q=new Node*[this->size];
     }
 
     void Enqueue(Node *x);

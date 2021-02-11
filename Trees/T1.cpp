@@ -1,17 +1,23 @@
 #include <iostream>
-#include <Queuecpp.h>
+#include "Queuecpp.h"
 using namespace std;
 
 class Tree{
-public:
+private:
     Node *root;
+public:
     Tree(){root=0;}
     void CreateTree();
+    void Preorder(){Preorder(Node *root);}
     void Preorder(Node *p);
+    void Postorder(){Postorder(Node *root);}
     void Postorder(Node *p);
+    void Inorder(){Inorder(Node *root);}
     void Inorder(Node *p);
+    void Levelorder(){Levelorder(Node *root);}
     void Levelorder(Node *p);
-    void Height(Node *root);
+    int Height(){return Height(Node *root);}
+    int Height(Node *root);
 };
 
 void Tree::CreateTree(){
@@ -28,7 +34,7 @@ void Tree::CreateTree(){
 
     while(!q.isEmpty()){
         p=q.Dequeue();
-        cout<<"Enter left child of "<<p->data;
+        cout<<"Enter left child of "<<p->data<<": ";
         cin>>x;
         if(x!=-1){
             t=new Node;
@@ -38,7 +44,7 @@ void Tree::CreateTree(){
             q.Enqueue(t);
         }
 
-        cout<<"Enter right child of "<<p->data;
+        cout<<"Enter right child of "<<p->data<<": ";
         cin>>x;
         if(x!=-1){
             t=new Node;
@@ -52,7 +58,7 @@ void Tree::CreateTree(){
 
 void Tree::Preorder(Node *p){
     if(p){
-        cout<<p->data;
+        cout<<p->data<<" -> ";
         Preorder(p->lchild);
         Preorder(p->rchild);
     }
@@ -61,11 +67,40 @@ void Tree::Preorder(Node *p){
 void Tree::Inorder(Node *p){
     if(p){
         Inorder(p->lchild);
-        cout<<p->data;
+        cout<<p->data<<" -> ";
         Inorder(p->rchild);
     }
 }
 
+void Tree::Levelorder(Node *p){
+    Queue q(100);
+    cout<<root->data;
+    q.Enqueue(root);
+    while(!q.isEmpty()){
+        root=q.Dequeue();
+        if(root->lchild){
+            cout<<root->lchild->data<<" -> ";
+            q.Enqueue(root->lchild);
+        }
+        if(root->rchild){
+            cout<<root->rchild->data<<" -> ";
+            q.Enqueue(root->rchild);
+        }
+    }
+}
+
+int Tree::Height(Node *root){
+    int x=0,y=0;
+    if(root==0) return 0;
+    x=Height(root->lchild);
+    y=Height(root->rchild);
+    if(x>y) return x+1;
+    else return y+1;
+}
+
 int main(){
+    Tree t;
+    t.CreateTree();
+    t.Preorder(t.root);
     return 0;
 }
