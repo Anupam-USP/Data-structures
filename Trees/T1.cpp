@@ -3,20 +3,14 @@
 using namespace std;
 
 class Tree{
-private:
-    Node *root;
 public:
+    Node *root;
     Tree(){root=0;}
     void CreateTree();
-    void Preorder(){Preorder(Node *root);}
     void Preorder(Node *p);
-    void Postorder(){Postorder(Node *root);}
     void Postorder(Node *p);
-    void Inorder(){Inorder(Node *root);}
     void Inorder(Node *p);
-    void Levelorder(){Levelorder(Node *root);}
     void Levelorder(Node *p);
-    int Height(){return Height(Node *root);}
     int Height(Node *root);
 };
 
