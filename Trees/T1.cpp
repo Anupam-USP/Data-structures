@@ -47,6 +47,8 @@ void Tree::CreateTree(){
             p->rchild=t;
             q.Enqueue(t);
         }
+
+        
     }
 }
 
